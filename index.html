@@ -3,51 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Post and Delete</title>
+<title>Realistic Bouncing Image</title>
 <style>
-  #posts-container {
-    margin-top: 20px;
+  #container {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    border: 2px solid black;
+    overflow: hidden;
   }
-  .post {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+
+  #image {
+    position: absolute;
+    width: 50px;
+    height: 50px;
   }
 </style>
 </head>
 <body>
-
-<h1>Post and Delete</h1>
-
-<div>
-  <textarea id="postInput" placeholder="Write something..."></textarea>
-  <button onclick="post()">Post</button>
-</div>
-
-<div id="posts-container">
-  <!-- Posts will be displayed here -->
+<div id="container">
+  <img id="image" src="C:\Users\Corey's Computer\Documents\GitHub\coreyduval.github.io\Twilight_Sparkle_Alicorn" alt="Bouncing Image">
 </div>
 
 <script>
-  function post() {
-    var postInput = document.getElementById("postInput");
-    var content = postInput.value.trim();
-    if (content !== "") {
-      var postDiv = document.createElement("div");
-      postDiv.className = "post";
-      postDiv.textContent = content;
-      document.getElementById("posts-container").appendChild(postDiv);
-      postInput.value = ""; // Clear the input field
+  const container = document.getElementById('container');
+  const image = document.getElementById('image');
 
-      // Schedule deletion after 30 seconds
-      setTimeout(function() {
-        postDiv.remove();
-      }, 30000);
-    } else {
-      alert("Please enter some content before posting.");
+  let posX = 0;
+  let posY = 0;
+  let speedX = 3;
+  let speedY = 0; // Initial vertical speed
+  const gravity = 0.1; // Gravity affecting the vertical movement
+
+  function animate() {
+
+    // Apply gravity
+    speedY += gravity;
+    if (speedX > 0) {speedX -= 0.02*speedX}
+    // Update position
+    posX += speedX;
+    posY += speedY;
+
+
+
+
+    // Check collision with container boundaries
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+
+   // Add event listener for mouse click on the image
+   image.addEventListener('click', function() {
+    speedY -= 0.02; // Increase vertical speed by 100 when clicked
+    speedX += Math.random() * 2 - 1;
+   });
+
+    if (posX <= 0 || posX + image.offsetWidth >= containerWidth) {
+      speedX *= -1; // Reverse horizontal direction
     }
+
+    if (posY <= 0) {
+      posY = 0; // Prevent the image from going above the top boundary
+      speedY *= -0.8; // Reverse vertical direction and dampen the bounce
+    } else if (posY + image.offsetHeight >= containerHeight) {
+      posY = containerHeight - image.offsetHeight; // Prevent the image from going below the bottom boundary
+      speedY *= -0.8; // Reverse vertical direction and dampen the bounce
+    }
+
+    // Update image position
+    image.style.left = `${posX}px`;
+    image.style.top = `${posY}px`;
+
+    requestAnimationFrame(animate); // Continue animation
   }
+
+  animate(); // Start animation
 </script>
 
 </body>
