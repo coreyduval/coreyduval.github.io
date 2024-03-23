@@ -1,7 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post and Delete</title>
+<style>
+  #posts-container {
+    margin-top: 20px;
+  }
+  .post {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+</style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+<h1>Post and Delete</h1>
+
+<div>
+  <textarea id="postInput" placeholder="Write something..."></textarea>
+  <button onclick="post()">Post</button>
+</div>
+
+<div id="posts-container">
+  <!-- Posts will be displayed here -->
+</div>
+
+<script>
+  function post() {
+    var postInput = document.getElementById("postInput");
+    var content = postInput.value.trim();
+    if (content !== "") {
+      var postDiv = document.createElement("div");
+      postDiv.className = "post";
+      postDiv.textContent = content;
+      document.getElementById("posts-container").appendChild(postDiv);
+      postInput.value = ""; // Clear the input field
+
+      // Schedule deletion after 30 seconds
+      setTimeout(function() {
+        postDiv.remove();
+      }, 30000);
+    } else {
+      alert("Please enter some content before posting.");
+    }
+  }
+</script>
+
 </body>
 </html>
