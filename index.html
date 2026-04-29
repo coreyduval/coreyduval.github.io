@@ -509,6 +509,101 @@
     }
     .other-list a:hover .arr { color: var(--accent); }
 
+    /* -------- Video / Press cards -------- */
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(20px, 3vw, 32px);
+    }
+    @media (max-width: 760px) {
+      .video-grid { grid-template-columns: 1fr; gap: 28px; }
+    }
+
+    .vid-card {
+      display: block;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .vid-thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--bg-alt);
+      border-radius: 4px;
+      margin-bottom: 18px;
+    }
+    .vid-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s cubic-bezier(.2,.7,.2,1);
+    }
+    .vid-card:hover .vid-thumb img { transform: scale(1.04); }
+    .vid-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17,17,16,0) 50%, rgba(17,17,16,0.45) 100%);
+      opacity: 0.7;
+      transition: opacity .3s ease;
+    }
+    .vid-card:hover .vid-thumb::after { opacity: 1; }
+    .vid-play {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(250,250,247,0.94);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      transition: transform .3s ease, background .3s ease;
+      z-index: 2;
+      box-shadow: 0 6px 20px -6px rgba(17,17,16,0.4);
+    }
+    .vid-play svg { width: 22px; height: 22px; margin-left: 3px; }
+    .vid-card:hover .vid-play {
+      transform: translate(-50%, -50%) scale(1.08);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .vid-body .ptag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .vid-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(20px, 2.6vw, 26px);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      transition: color .25s ease;
+    }
+    .vid-card:hover .vid-title { color: var(--accent); }
+    .vid-body p {
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .vid-body .role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+      padding-top: 10px;
+      border-top: 1px solid var(--rule);
+    }
+    .vid-body .role b { color: var(--ink); font-weight: 500; }
+
     /* -------- Skills -------- */
     .skills {
       display: grid;
@@ -606,8 +701,8 @@
       <div class="brand">Corey Du&nbsp;Val</div>
       <ul>
         <li><a href="#work">Work</a></li>
+        <li><a href="#content">Press</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
@@ -625,7 +720,7 @@
             <span class="italic">come next.</span>
           </h1>
           <div class="about-inline reveal">
-            <p>Hi, I'm Corey! I work at the messy, interesting edge of robotics — where a box of humanoid parts meets a developer who needs a demo running in an hour.</p>
+            <p>I work at the messy, interesting edge of robotics — where a box of humanoid parts meets a developer who needs a demo running in an hour.</p>
             <p>My day job is hardware support engineering: diagnosing, repairing, and shipping humanoid robots. The undocumented half of the role is software triage, logistics, and flying to conferences to run the booth as a technical salesperson.</p>
             <p>Before robotics I ran organoid cultures at UCSC's Genomics Institute, wrote JEDEC manuals and a thousand-line VB forecasting tool at Adesto, and spent most of my weekends winning hackathons with friends.</p>
           </div>
@@ -662,8 +757,8 @@
           <ul>
             <li>Hardware support for Booster T1 and K1 humanoid robots — diagnostics, repairs, firmware issues, and fielding developer questions on the SDK and ROS2 stack.</li>
             <li>Software support for customers running embodied-AI workloads on the T1 platform, including NVIDIA Isaac-based workflows.</li>
-            <li>Shipping and logistics across the US market — import, inventory, and fulfillment handling for a humans and humanoids alike.</li>
-            <li>Travel to robotics and AI conferences as the on-site technical support — demos, customer meetings, and the occasional dual role as technical salesperson.</li>
+            <li>Shipping and logistics across the US market — import, inventory, and RMA handling for a humanoid platform that can't afford downtime.</li>
+            <li>Travel to robotics and AI conferences as the on-site technical lead — demos, customer meetings, and the occasional dual role as technical salesperson.</li>
           </ul>
         </div>
       </div>
@@ -676,6 +771,7 @@
           <div class="toggle"><span>+</span> Expand</div>
           <ul>
             <li>Hardware and software support for Unitree Go2 quadrupeds and G1 humanoids distributed across North America — the engineer customers actually talked to when something broke.</li>
+            <li>Worked on and around Toborlife's Robot Harness control system, bridging off-the-shelf Unitree platforms with customer-specific software integrations.</li>
             <li>Handled shipping, logistics, and pre-deployment configuration for a distributor moving robots into business and residential contexts.</li>
             <li>Technical salesperson on the conference circuit — RSA Conference, Abundance Summit, NEARCON, AI Conference SF — running live demos and closing technically-minded buyers.</li>
           </ul>
@@ -712,10 +808,51 @@
     </div>
   </section>
 
-  <section id="projects">
+  <section id="content">
     <div class="wrap">
       <div class="sec-head reveal">
         <div class="num">03</div>
+        <h2>Content <span class="italic">featuring me</span></h2>
+      </div>
+
+      <div class="video-grid">
+        <a class="vid-card reveal" href="https://www.youtube.com/watch?v=1OpngwB6gWM" target="_blank" rel="noopener">
+          <div class="vid-thumb">
+            <img src="https://img.youtube.com/vi/1OpngwB6gWM/maxresdefault.jpg" alt="Unitree G1 Basic Unboxing — Toborlife AI" loading="lazy" onerror="this.src='https://img.youtube.com/vi/1OpngwB6gWM/hqdefault.jpg'" />
+            <div class="vid-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="vid-body">
+            <div class="ptag">Toborlife AI · Nov 2025</div>
+            <h3 class="vid-title">Unitree G1 Unboxing &amp; Setup Guide</h3>
+            <p>An official Toborlife walkthrough for new G1 humanoid owners — unboxing, power-on, controller pairing, phone connection, and first movement. The kind of video I'd otherwise be walking customers through one-on-one.</p>
+            <div class="role"><b>My part:</b> on-camera technical lead — running the demo, narrating the setup procedure, and being the engineer the script was built around.</div>
+          </div>
+        </a>
+
+        <a class="vid-card reveal" href="https://www.youtube.com/watch?v=wSxBeZ2eKws" target="_blank" rel="noopener">
+          <div class="vid-thumb">
+            <img src="https://img.youtube.com/vi/wSxBeZ2eKws/maxresdefault.jpg" alt="Can CoreJJ play with an IRL Thresh Hook?" loading="lazy" onerror="this.src='https://img.youtube.com/vi/wSxBeZ2eKws/hqdefault.jpg'" />
+            <div class="vid-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="vid-body">
+            <div class="ptag">Team Liquid · Liquid Hacks 3.0 · Dec 2022</div>
+            <h3 class="vid-title">Can CoreJJ play with an IRL Thresh Hook?</h3>
+            <p>Team Liquid's official video for our Liquid Hacks 3.0 project — a real-world Thresh Hook controller built to play League of Legends. Pro player CoreJJ tries it out, and the contraption mostly behaves itself.</p>
+            <div class="role"><b>My part:</b> hardware build for the hook controller — the physical contraption, sensors, and electronics.</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="num">04</div>
         <h2>Selected <span class="italic">hardware projects</span></h2>
       </div>
 
@@ -757,7 +894,7 @@
   <section id="skills">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="num">04</div>
+        <div class="num">05</div>
         <h2>Tools of the <span class="italic">trade</span></h2>
       </div>
 
